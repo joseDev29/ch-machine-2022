@@ -1,0 +1,442 @@
+<div class="grid m-0">
+  <div class="col-12 md:col-6 xl:col-4 min-h-screen">
+    <div>
+      <p-panel header="Acciones de la maquina" [toggleable]="true">
+        <div>
+          <div
+            class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+          >
+            <label for="">Memoria</label>
+            <p-inputNumber
+              [showButtons]="false"
+              [(ngModel)]="machineState.memoryCount"
+              [min]="machineState.MIN_MEMORY_COUNT"
+              [max]="machineState.MAX_MEMORY_COUNT"
+              [disabled]="!machineState.buttonsState.memory"
+            >
+            </p-inputNumber>
+          </div>
+          <div
+            class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mt-2"
+          >
+            <label for="">Kernel</label>
+            <p-inputNumber
+              [showButtons]="false"
+              [(ngModel)]="machineState.kernelCount"
+              [min]="machineState.MIN_KERNEL_COUNT"
+              [disabled]="!machineState.buttonsState.kernel"
+            >
+            </p-inputNumber>
+          </div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6">
+            <button
+              pButton
+              class="p-button"
+              label="Iniciar"
+              style="width: 100%"
+              (click)="machineState.initMachine()"
+              [disabled]="!machineState.buttonsState.initMachine"
+            ></button>
+          </div>
+          <div class="col-6">
+            <button
+              pButton
+              class="p-button-danger"
+              label="Resetear"
+              style="width: 100%"
+              [disabled]="!machineState.buttonsState.resetMachine"
+              (click)="machineState.resetMachine()"
+            ></button>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Ejecucion" [toggleable]="true">
+        <div class="grid">
+          <div class="col-12">
+            <div
+              class="flex flex-column p-2"
+              style="
+                border-radius: var(--border-radius);
+                border: 1px solid var(--orange-500);
+              "
+            >
+              <span class="text-xs" style="color: var(--orange-500)"
+                >Estado de la maquina</span
+              >
+              <span class="text-sm mt-1"
+                >MODE: {{ machineState.state }} | MEMORY:
+                {{ machineState.memoryCount }} | KERNEL:
+                {{ machineState.kernelCount }}</span
+              >
+            </div>
+          </div>
+          <div class="col-12">
+            <div
+              class="flex flex-column p-2"
+              style="
+                border-radius: var(--border-radius);
+                border: 1px solid var(--pink-500);
+              "
+            >
+              <span class="text-xs" style="color: var(--pink-500)"
+                >En ejecucion</span
+              >
+              <span class="text-sm mt-1"
+                >[{{ machineState.memoryRunningPosition }}] :
+                {{ getInExecutionLine() }}</span
+              >
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="grid">
+              <div class="col-4">
+                <div
+                  class="h-3rem flex justify-content-center align-items-center text-sm"
+                  style="
+                    border-radius: var(--border-radius);
+                    border: 1px solid var(--cyan-500);
+                    color: var(--cyan-500);
+                  "
+                >
+                  Acumulador
+                </div>
+              </div>
+              <div class="col-8">
+                <div
+                  class="h-3rem flex justify-content-center align-items-center text-md"
+                  style="
+                    border-radius: var(--border-radius);
+                    border: 1px solid var(--cyan-500);
+                  "
+                >
+                  {{ machineState.memory[0] }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="grid">
+              <div class="col-8">
+                <input
+                  style="width: 100%"
+                  pInputText
+                  type="text"
+                  placeholder="Ingrese el valor a leer"
+                  [(ngModel)]="machineState.readOperationInput.value"
+                  [disabled]="!machineState.readOperationInput.active"
+                />
+              </div>
+              <div class="col-4">
+                <button
+                  pButton
+                  class="p-button-primary"
+                  label="Ingresar"
+                  style="width: 100%"
+                  (click)="onReadValue()"
+                  [disabled]="!machineState.readOperationInput.active"
+                ></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="grid">
+              <div class="col-12">
+                <button
+                  pButton
+                  class="p-button-success"
+                  label="Ejecutar sin pausas"
+                  style="width: 100%"
+                  (click)="onRunNotPause()"
+                  [disabled]="!machineState.buttonsState.runNotPause"
+                ></button>
+              </div>
+              <div class="col-12">
+                <button
+                  pButton
+                  class="p-button-warning"
+                  label="Ejecutar paso a paso"
+                  style="width: 100%"
+                  (click)="onRunStepByStep()"
+                  [disabled]="!machineState.buttonsState.runStepByStep"
+                ></button>
+              </div>
+              <div class="col-12">
+                <button
+                  pButton
+                  class="p-button-danger"
+                  label="Reiniciar posicion de memoria"
+                  style="width: 100%"
+                  (click)="onAnalyzeCode()"
+                  [disabled]="!machineState.buttonsState.resetMemoryPosition"
+                ></button>
+              </div>
+              <div class="col-12">
+                <button
+                  pButton
+                  class="p-button-primary"
+                  label="Siguiente instruccion"
+                  style="width: 100%"
+                  (click)="onAnalyzeCode()"
+                  [disabled]="!machineState.buttonsState.nextInstruction"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Opciones de codigo" [toggleable]="true">
+        <div class="grid">
+          <div class="col-12">
+            <button
+              pButton
+              class="p-button-success"
+              label="Analizar y cargar en memoria"
+              style="width: 100%"
+              (click)="onAnalyzeCode()"
+              [disabled]="!machineState.buttonsState.analyzeCode"
+            ></button>
+          </div>
+          <div class="col-12">
+            <button
+              pButton
+              class="p-button-warning"
+              label="Cargar codigo"
+              style="width: 100%"
+              (click)="fileInput.click()"
+              [disabled]="!machineState.buttonsState.uploadCode"
+            ></button>
+          </div>
+          <div class="col-12">
+            <button
+              pButton
+              class="p-button-help"
+              label="Descargar codigo"
+              style="width: 100%"
+              (click)="onDownloadFile()"
+              [disabled]="!machineState.buttonsState.downloadCode"
+            ></button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-12">
+            <input
+              #fileInput
+              type="file"
+              (change)="onChangeFile($event)"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-9">
+            <input
+              style="width: 100%"
+              pInputText
+              type="text"
+              placeholder="Filename"
+              [(ngModel)]="machineState.fileName"
+              [disabled]="!machineState.buttonsState.codeEditor"
+            />
+          </div>
+          <div class="col-3">
+            <span
+              class="flex justify-content-center align-items-center"
+              style="
+                width: 100%;
+                height: 100%;
+                border-radius: var(--border-radius);
+                color: var(--primary-color-text);
+              "
+              [ngStyle]="{
+                'background-color': machineState.buttonsState.codeEditor
+                  ? 'var(--blue-500)'
+                  : 'var(--blue-300)'
+              }"
+              >.ch</span
+            >
+          </div>
+        </div>
+
+        <textarea
+          pInputTextarea
+          class="w-full h-24rem mt-4"
+          style="resize: none"
+          [(ngModel)]="machineState.rawCode"
+          [spellcheck]="false"
+          [disabled]="!machineState.buttonsState.codeEditor"
+        ></textarea>
+      </p-panel>
+    </div>
+  </div>
+  <div class="col-12 md:col-6 xl:col-4 min-h-screen">
+    <div>
+      <p-panel header="Monitor y impresora" [toggleable]="true">
+        <div
+          class="p-2 flex flex-column align-items-center"
+          style="
+            border-radius: var(--border-radius);
+            border: 1px solid var(--green-500);
+          "
+        >
+          <span style="color: var(--green-500)">Monitor</span>
+          <div class="w-full h-8rem text-center mt-3">
+            {{ machineState.monitor }}
+          </div>
+        </div>
+        <div
+          class="p-2 flex flex-column align-items-center mt-4"
+          style="
+            border-radius: var(--border-radius);
+            border: 1px solid var(--purple-500);
+          "
+        >
+          <span style="color: var(--purple-500)">Impresora</span>
+          <div class="w-full h-8rem text-center mt-3">
+            {{ machineState.printer }}
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Errores" [toggleable]="true">
+        <p-table
+          [value]="machineState.codeErrors"
+          [scrollable]="true"
+          scrollHeight="300px"
+          scrollDirection="both"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Programa</th>
+              <th>Linea</th>
+              <th>Detalles</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-error>
+            <tr>
+              <td>{{ error.programID }}</td>
+              <td>{{ error.line }}</td>
+              <td>{{ error.text }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Programas" [toggleable]="true">
+        <p-table
+          [value]="getArrayPrograms()"
+          [scrollable]="true"
+          scrollHeight="300px"
+          scrollDirection="both"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Tamaño</th>
+              <th>PI</th>
+              <th>PF</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-program>
+            <tr>
+              <td>{{ program.id }}</td>
+              <td>{{ program.name }}.ch</td>
+              <td>{{ program.length }}</td>
+              <td>{{ program.initialPosition }}</td>
+              <td>{{ program.lastPosition }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Variables" [toggleable]="true">
+        <p-table
+          [value]="machineState.allVariables"
+          [scrollable]="true"
+          scrollHeight="300px"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Program</th>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Value</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-variable>
+            <tr>
+              <td>{{ variable.programID }}</td>
+              <td>{{ variable.name }}</td>
+              <td>{{ variable.memoryPosition }}</td>
+              <td>{{ machineState.memory[variable.memoryPosition] }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+    <div class="mt-2">
+      <p-panel header="Etiquetas" [toggleable]="true">
+        <p-table
+          [value]="machineState.allLabels"
+          [scrollable]="true"
+          scrollHeight="300px"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Program</th>
+              <th>Name</th>
+              <th>PS</th>
+              <th>MP</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-label>
+            <tr>
+              <td>{{ label.programID }}</td>
+              <td>{{ label.name }}</td>
+              <td>{{ label.programPosition }}</td>
+              <td>{{ label.memoryPosition }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+  </div>
+  <div class="col-12 md:col-6 xl:col-4 min-h-screen">
+    <div>
+      <p-panel header="Memoria" [toggleable]="true">
+        <p-table
+          [value]="machineState.memory"
+          [scrollable]="true"
+          scrollHeight="600px"
+          scrollDirection="horizontal"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Posicion</th>
+              <th>Valor</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cell let-index="rowIndex">
+            <tr>
+              <td>{{ index }}</td>
+              <td>{{ cell | memoryItem }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>
