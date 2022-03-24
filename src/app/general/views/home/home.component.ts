@@ -45,23 +45,48 @@ export class HomeComponent {
   getArrayPrograms = () => Array.from(this.machineState.programs.values())
 
   getInExecutionLine = () =>
-    this.machineState.memory[this.machineState.memoryRunningPosition]
-      .toString()
-      .includes(MEMORY_LINE_SEPARATOR)
-      ? (JSON.parse(
-          this.machineState.memory[this.machineState.memoryRunningPosition]
-            .toString()
-            .split(MEMORY_LINE_SEPARATOR)[0],
-        ) as CompoundMemoryItem)
-      : 'Celda de variable'
+    this.machineState.memoryRunningPosition === 0
+      ? 'Celda de acumulador'
+      : this.machineState.memory[this.machineState.memoryRunningPosition] ===
+        'Kernel'
+      ? 'Celda de kernel'
+      : !this.machineState.memory[this.machineState.memoryRunningPosition]
+          .toString()
+          .includes(MEMORY_LINE_SEPARATOR)
+      ? 'Celda de variable'
+      : (
+          JSON.parse(
+            this.machineState.memory[this.machineState.memoryRunningPosition]
+              .toString()
+              .split(MEMORY_LINE_SEPARATOR)[0],
+          ) as CompoundMemoryItem
+        ).lineText
 
   onRunNotPause = () => {
+    this.machineState.buttonsState = {
+      ...this.machineState.buttonsState,
+      runNotPause: false,
+      runStepByStep: false,
+    }
     this.machineState.executionMode = 'not-pause'
     this.programExecutionService.runProgram()
   }
 
   onRunStepByStep = () => {
+    this.machineState.buttonsState = {
+      ...this.machineState.buttonsState,
+      runNotPause: false,
+      runStepByStep: false,
+    }
     this.machineState.executionMode = 'step-by-step'
+    this.programExecutionService.runProgram()
+  }
+
+  onNextInstruction = () => {
+    this.machineState.buttonsState = {
+      ...this.machineState.buttonsState,
+      nextInstruction: false,
+    }
     this.programExecutionService.runProgram()
   }
 
@@ -78,6 +103,14 @@ export class HomeComponent {
       varType: VARIABLE_TYPE.chain,
     }
 
-    this.programExecutionService.runProgram()
+    if (this.machineState.executionMode === 'step-by-step') {
+      this.machineState.buttonsState = {
+        ...this.machineState.buttonsState,
+        nextInstruction: true,
+      }
+      return
+    }
+
+    return this.programExecutionService.runProgram()
   }
 }

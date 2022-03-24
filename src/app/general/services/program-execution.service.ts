@@ -85,6 +85,8 @@ export class ProgramExecutionService {
       this.machineState.memory[0] = 0
       this.machineState.monitor = ''
       this.machineState.printer = ''
+
+      return this.finalizeInstruction()
     }
 
     lineInExecution = JSON.parse(

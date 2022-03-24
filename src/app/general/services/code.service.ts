@@ -63,6 +63,8 @@ export class CodeService {
     this.machineState.programsInReview.clear()
     this.machineState.codeErrors = []
 
+    if (!this.machineState.rawCode) return
+
     this.orderCode()
 
     const programID = (
@@ -93,6 +95,7 @@ export class CodeService {
     this.machineState.buttonsState = {
       ...this.machineState.buttonsState,
       runNotPause: true,
+      runStepByStep: true,
     }
 
     this.messageService.add({
