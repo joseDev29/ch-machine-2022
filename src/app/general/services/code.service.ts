@@ -248,15 +248,15 @@ export class CodeService {
           this.ruleExtract.check({ programID, linePosition })
           break
 
-        case LINE_TYPE.AND:
+        case LINE_TYPE.AND.toLowerCase():
           this.ruleAND.check({ programID, linePosition })
           break
 
-        case LINE_TYPE.OR:
+        case LINE_TYPE.OR.toLowerCase():
           this.ruleOR.check({ programID, linePosition })
           break
 
-        case LINE_TYPE.NOT:
+        case LINE_TYPE.NOT.toLowerCase():
           this.ruleNOT.check({ programID, linePosition })
           break
 

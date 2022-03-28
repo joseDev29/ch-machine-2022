@@ -22,7 +22,7 @@ export class RuleNOT {
       return this.machineState.codeErrors.push({
         programID,
         line: linePosition + 1,
-        text: 'Se hace una declaracion "NO" pero no se especifican las 3 variable requeridas',
+        text: 'Se hace una declaracion "NO" pero no se especifican las 2 variable requeridas',
       })
 
     if (line.length > 3)
