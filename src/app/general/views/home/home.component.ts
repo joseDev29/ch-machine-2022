@@ -121,4 +121,8 @@ export class HomeComponent {
 
     return this.programExecutionService.runProgram()
   }
+
+  onClearMonitor = () => (this.machineState.monitor = [])
+
+  onClearPrinter = () => (this.machineState.printer = [])
 }

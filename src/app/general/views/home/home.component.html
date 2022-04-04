@@ -279,8 +279,19 @@
   <div class="col-12 md:col-6 xl:col-4 min-h-screen">
     <div>
       <p-panel header="Monitor y impresora" [toggleable]="true">
+        <div class="flex justify-content-center">
+          <button
+            pButton
+            label="Limpiar monitor"
+            (click)="onClearMonitor()"
+            style="
+              background-color: var(--green-500);
+              border-color: var(--green-500);
+            "
+          ></button>
+        </div>
         <div
-          class="p-2 flex flex-column align-items-center"
+          class="p-2 flex flex-column align-items-center mt-2"
           style="
             border-radius: var(--border-radius);
             border: 1px solid var(--green-500);
@@ -295,6 +306,17 @@
               {{ item }}
             </span>
           </div>
+        </div>
+        <div class="flex justify-content-center mt-4">
+          <button
+            pButton
+            label="Limpiar impresora"
+            (click)="onClearPrinter()"
+            style="
+              background-color: var(--purple-500);
+              border-color: var(--purple-500);
+            "
+          ></button>
         </div>
         <div
           class="p-2 flex flex-column align-items-center mt-4"
