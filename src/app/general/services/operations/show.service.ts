@@ -9,7 +9,7 @@ export class Show {
 
   exec = ({ line }: OperationExecParams) => {
     if (line.var1Name === 'acumulador') {
-      this.machineState.monitor += `${this.machineState.memory[0]}\n`
+      this.machineState.monitor.push(`${this.machineState.memory[0]}\n`)
       return
     }
 
@@ -20,6 +20,6 @@ export class Show {
       variable.memoryPosition as number
     ] as number
 
-    this.machineState.monitor += `${varValue}\n`
+    this.machineState.monitor.push(`${varValue}\n`)
   }
 }

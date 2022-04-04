@@ -9,7 +9,7 @@ export class Print {
 
   exec = ({ line }: OperationExecParams) => {
     if (line.var1Name === 'acumulador') {
-      this.machineState.printer += `${this.machineState.memory[0]}\n`
+      this.machineState.printer.push(`${this.machineState.memory[0]}\n`)
       return
     }
 
@@ -20,6 +20,6 @@ export class Print {
       variable.memoryPosition as number
     ] as number
 
-    this.machineState.printer += `${varValue}\n`
+    this.machineState.printer.push(`${varValue}\n`)
   }
 }

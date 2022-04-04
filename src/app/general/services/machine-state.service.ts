@@ -71,8 +71,8 @@ export class MachineStateService {
 
   public codeErrors: CodeError[] = []
 
-  public monitor: string = ''
-  public printer: string = ''
+  public monitor: string[] = []
+  public printer: string[] = []
 
   public readOperationInput: ReadOperationInput = INITIAL_READ_OPERATION_INPUT
 
@@ -133,8 +133,8 @@ export class MachineStateService {
     this.allLabels = []
     this.programsInReview = new Map()
     this.codeErrors = []
-    this.monitor = ''
-    this.printer = ''
+    this.monitor = []
+    this.printer = []
     this.memoryRunningPosition = 0
     this.programInExecution = ''
     this.executionMode = ''

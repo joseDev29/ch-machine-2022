@@ -83,8 +83,8 @@ export class ProgramExecutionService {
       nextLine.programID !== this.machineState.programInExecution
     ) {
       this.machineState.memory[0] = 0
-      this.machineState.monitor = ''
-      this.machineState.printer = ''
+      this.machineState.monitor = []
+      this.machineState.printer = []
 
       return this.finalizeInstruction()
     }

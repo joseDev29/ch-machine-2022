@@ -27,6 +27,13 @@ export class HomeComponent {
     public readonly programExecutionService: ProgramExecutionService,
   ) {}
 
+  onResetMachine = () => {
+    const input = this.fileInput?.nativeElement as HTMLInputElement
+    input.files = null
+    input.value = ''
+    this.machineState.resetMachine()
+  }
+
   onChangeFile = (ev: any) => {
     const filePath = ev.target.value
     const file = ev.target.files[0]
@@ -67,6 +74,7 @@ export class HomeComponent {
       ...this.machineState.buttonsState,
       runNotPause: false,
       runStepByStep: false,
+      nextInstruction: false,
     }
     this.machineState.executionMode = 'not-pause'
     this.programExecutionService.runProgram()
@@ -75,7 +83,7 @@ export class HomeComponent {
   onRunStepByStep = () => {
     this.machineState.buttonsState = {
       ...this.machineState.buttonsState,
-      runNotPause: false,
+      // runNotPause: false,
       runStepByStep: false,
     }
     this.machineState.executionMode = 'step-by-step'

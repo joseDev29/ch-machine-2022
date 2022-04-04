@@ -47,7 +47,7 @@
               label="Resetear"
               style="width: 100%"
               [disabled]="!machineState.buttonsState.resetMachine"
-              (click)="machineState.resetMachine()"
+              (click)="onResetMachine()"
             ></button>
           </div>
         </div>
@@ -287,8 +287,13 @@
           "
         >
           <span style="color: var(--green-500)">Monitor</span>
-          <div class="w-full h-8rem text-center mt-3">
-            {{ machineState.monitor }}
+          <div class="w-full h-8rem text-center mt-3" style="overflow-y: auto">
+            <span
+              style="display: block"
+              *ngFor="let item of machineState.monitor"
+            >
+              {{ item }}
+            </span>
           </div>
         </div>
         <div
@@ -299,8 +304,13 @@
           "
         >
           <span style="color: var(--purple-500)">Impresora</span>
-          <div class="w-full h-8rem text-center mt-3">
-            {{ machineState.printer }}
+          <div class="w-full h-8rem text-center mt-3" style="overflow-y: auto">
+            <span
+              style="display: block"
+              *ngFor="let item of machineState.printer"
+            >
+              {{ item }}
+            </span>
           </div>
         </div>
       </p-panel>

@@ -17,10 +17,10 @@ export class Return {
       const varValue =
         this.machineState.memory[variable.memoryPosition as number]
 
-      this.machineState.monitor += `Retorno: ${varValue}`
+      this.machineState.monitor.push(`Retorno: ${varValue}`)
       return
     }
 
-    this.machineState.monitor += `Retorno: ${line.value}`
+    this.machineState.monitor.push(`Retorno: ${line.value}`)
   }
 }
