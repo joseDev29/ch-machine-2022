@@ -11,6 +11,7 @@ import { CardModule } from 'primeng/card'
 import { BadgeModule } from 'primeng/badge'
 import { TableModule } from 'primeng/table'
 import { InputTextModule } from 'primeng/inputtext'
+import { DropdownModule } from 'primeng/dropdown'
 
 @NgModule({
   exports: [
@@ -23,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext'
     BadgeModule,
     TableModule,
     InputTextModule,
+    DropdownModule,
   ],
   providers: [MessageService],
 })

@@ -6,6 +6,7 @@ import {
   ButtonsState,
   ExecutionMode,
   MachineState,
+  PROCESS_PLANNING_METHOD,
   ReadOperationInput,
 } from '../interfaces/machine.interfaces'
 import {
@@ -52,6 +53,9 @@ export class MachineStateService {
   public state: MachineState = 'NO INICIADA'
   public memoryCount: number = DEFAULT_MEMORY_COUNT
   public kernelCount: number = DEFAULT_KERNEL_COUNT
+
+  public processPlanningMethod: PROCESS_PLANNING_METHOD =
+    PROCESS_PLANNING_METHOD.fcfs
 
   public fileName: string = ''
   public rawCode: string = ''
@@ -123,6 +127,7 @@ export class MachineStateService {
     this.state = 'NO INICIADA'
     this.memoryCount = DEFAULT_MEMORY_COUNT
     this.kernelCount = DEFAULT_KERNEL_COUNT
+    this.processPlanningMethod = PROCESS_PLANNING_METHOD.fcfs
     this.fileName = ''
     this.rawCode = ''
     this.code = []

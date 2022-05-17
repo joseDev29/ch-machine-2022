@@ -29,6 +29,20 @@
             </p-inputNumber>
           </div>
         </div>
+        <div class="grid mt-1">
+          <div class="col-12">
+            <label style="display: block"
+              >Metodo de planificacion de procesos</label
+            >
+            <p-dropdown
+              [style]="{ width: '100%', marginTop: '4px' }"
+              [options]="planningMethodsOptions"
+              optionValue="value"
+              optionLabel="name"
+              [(ngModel)]="machineState.processPlanningMethod"
+            ></p-dropdown>
+          </div>
+        </div>
         <div class="grid mt-2">
           <div class="col-6">
             <button

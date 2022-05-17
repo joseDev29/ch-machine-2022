@@ -24,3 +24,17 @@ export interface ReadOperationInput {
   memoryPosition: number
   varType: VARIABLE_TYPE
 }
+
+export enum PROCESS_PLANNING_METHOD {
+  fcfs = 'fcfs',
+  roundRobin = 'roundRobin',
+  sjf = 'sjf',
+  sjfExpropiative = 'sjfExpropiative',
+  priority = 'priority',
+  priorityExpropiative = 'priorityExpropiative',
+}
+
+export interface ProcessPlanningMethodOption {
+  value: PROCESS_PLANNING_METHOD
+  name: string
+}

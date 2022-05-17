@@ -1,6 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core'
 import { MessageService } from 'primeng/api'
-import { MEMORY_LINE_SEPARATOR } from '../../constants/machine.constants'
+import {
+  MEMORY_LINE_SEPARATOR,
+  PROCESS_PLANNING_METHODS_OPTIONS,
+} from '../../constants/machine.constants'
+import { ProcessPlanningMethodOption } from '../../interfaces/machine.interfaces'
 import {
   CompoundMemoryItem,
   VARIABLE_TYPE,
@@ -18,6 +22,9 @@ import { ProgramExecutionService } from '../../services/program-execution.servic
 export class HomeComponent {
   @ViewChild('fileInput')
   public fileInput: ElementRef<HTMLInputElement> | null = null
+  public planningMethodsOptions: ProcessPlanningMethodOption[] = Object.values(
+    PROCESS_PLANNING_METHODS_OPTIONS,
+  )
 
   constructor(
     private readonly messageService: MessageService,
