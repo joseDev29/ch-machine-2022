@@ -161,13 +161,12 @@ export class ProgramExecutionService {
 
   finalizeInstruction = () => {
     if (this.machineState.executionMode === 'not-pause') {
-      return this.runProgram()
+      setTimeout(() => this.runProgram(), 200)
     } else if (this.machineState.executionMode === 'step-by-step') {
       this.machineState.buttonsState = {
         ...this.machineState.buttonsState,
         nextInstruction: true,
       }
-      return
     }
   }
 }
