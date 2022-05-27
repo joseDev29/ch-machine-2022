@@ -1,0 +1,22 @@
+<p-table
+  [value]="machineState.allVariables"
+  [scrollable]="true"
+  scrollHeight="300px"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Program</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Value</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-variable>
+    <tr>
+      <td>{{ variable.programID }}</td>
+      <td>{{ variable.name }}</td>
+      <td>{{ variable.memoryPosition }}</td>
+      <td>{{ machineState.memory[variable.memoryPosition] }}</td>
+    </tr>
+  </ng-template>
+</p-table>

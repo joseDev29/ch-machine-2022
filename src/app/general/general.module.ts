@@ -15,6 +15,18 @@ import { FileService } from './services/file.service'
 import { CodeService } from './services/code.service'
 import { ProgramExecutionService } from './services/program-execution.service'
 
+//Components
+import { MemoryTableComponent } from './components/memory-table/memory-table.component'
+import { LabelsTableComponent } from './components/labels-table/labels-table.component'
+import { VariablesTableComponent } from './components/variables-table/variables-table.component'
+import { ProgramsTableComponent } from './components/programs-table/programs-table.component'
+import { CodeErrorsTableComponent } from './components/code-errors-table/code-errors-table.component'
+import { PrinterComponent } from './components/printer/printer.component'
+import { MonitorComponent } from './components/monitor/monitor.component'
+import { CodeOptionsComponent } from './components/code-options/code-options.component'
+import { ExecutionOptionsComponent } from './components/execution-options/execution-options.component'
+import { MachineOptionsComponent } from './components/machine-options/machine-options.component'
+
 //Rules
 import { RuleNew } from './services/rules/rule-new.service'
 import { RuleLabel } from './services/rules/rule-label.service'
@@ -62,7 +74,21 @@ import { Store } from './services/operations/store.service'
 import { Subtract } from './services/operations/subtract.service'
 
 @NgModule({
-  declarations: [MemoryItemPipe, ParseProgramMap, HomeComponent],
+  declarations: [
+    MemoryItemPipe,
+    ParseProgramMap,
+    HomeComponent,
+    MemoryTableComponent,
+    LabelsTableComponent,
+    VariablesTableComponent,
+    ProgramsTableComponent,
+    CodeErrorsTableComponent,
+    PrinterComponent,
+    MonitorComponent,
+    CodeOptionsComponent,
+    ExecutionOptionsComponent,
+    MachineOptionsComponent,
+  ],
   imports: [CommonModule, PrimeNgModule, FormsModule],
   exports: [HomeComponent],
   providers: [

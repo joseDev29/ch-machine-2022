@@ -1,0 +1,82 @@
+<div class="grid">
+  <div class="col-12">
+    <button
+      pButton
+      class="p-button-success"
+      label="Analizar y cargar en memoria"
+      style="width: 100%"
+      (click)="onAnalyzeCode()"
+      [disabled]="!machineState.buttonsState.analyzeCode"
+    ></button>
+  </div>
+  <div class="col-12">
+    <button
+      pButton
+      class="p-button-warning"
+      label="Cargar codigo"
+      style="width: 100%"
+      (click)="fileInput.click()"
+      [disabled]="!machineState.buttonsState.uploadCode"
+    ></button>
+  </div>
+  <div class="col-12">
+    <button
+      pButton
+      class="p-button-help"
+      label="Descargar codigo"
+      style="width: 100%"
+      (click)="onDownloadFile()"
+      [disabled]="!machineState.buttonsState.downloadCode"
+    ></button>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <input
+      #fileInput
+      type="file"
+      (change)="onChangeFile($event)"
+      style="display: none"
+    />
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-9">
+    <input
+      style="width: 100%"
+      pInputText
+      type="text"
+      placeholder="Filename"
+      [(ngModel)]="machineState.fileName"
+      [disabled]="!machineState.buttonsState.codeEditor"
+    />
+  </div>
+  <div class="col-3">
+    <span
+      class="flex justify-content-center align-items-center"
+      style="
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius);
+        color: var(--primary-color-text);
+      "
+      [ngStyle]="{
+        'background-color': machineState.buttonsState.codeEditor
+          ? 'var(--blue-500)'
+          : 'var(--blue-300)'
+      }"
+      >.ch</span
+    >
+  </div>
+</div>
+
+<textarea
+  pInputTextarea
+  class="w-full h-24rem mt-4"
+  style="resize: none"
+  [(ngModel)]="machineState.rawCode"
+  [spellcheck]="false"
+  [disabled]="!machineState.buttonsState.codeEditor"
+></textarea>

@@ -1,0 +1,19 @@
+<p-table
+  [value]="machineState.memory"
+  [scrollable]="true"
+  scrollHeight="600px"
+  scrollDirection="horizontal"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Posicion</th>
+      <th>Valor</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cell let-index="rowIndex">
+    <tr>
+      <td>{{ index }}</td>
+      <td>{{ cell | memoryItem }}</td>
+    </tr>
+  </ng-template>
+</p-table>

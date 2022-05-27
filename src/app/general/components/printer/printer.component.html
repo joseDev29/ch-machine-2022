@@ -1,0 +1,22 @@
+<div class="flex justify-content-center mt-4">
+  <button
+    pButton
+    label="Limpiar impresora"
+    (click)="onClearPrinter()"
+    style="background-color: var(--purple-500); border-color: var(--purple-500)"
+  ></button>
+</div>
+<div
+  class="p-2 flex flex-column align-items-center mt-4"
+  style="
+    border-radius: var(--border-radius);
+    border: 1px solid var(--purple-500);
+  "
+>
+  <span style="color: var(--purple-500)">Impresora</span>
+  <div class="w-full h-8rem text-center mt-3" style="overflow-y: auto">
+    <span style="display: block" *ngFor="let item of machineState.printer">
+      {{ item }}
+    </span>
+  </div>
+</div>

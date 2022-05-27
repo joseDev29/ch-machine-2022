@@ -1,0 +1,61 @@
+<div>
+  <div
+    class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+  >
+    <label for="">Memoria</label>
+    <p-inputNumber
+      [showButtons]="false"
+      [(ngModel)]="machineState.memoryCount"
+      [min]="machineState.MIN_MEMORY_COUNT"
+      [max]="machineState.MAX_MEMORY_COUNT"
+      [disabled]="!machineState.buttonsState.memory"
+    >
+    </p-inputNumber>
+  </div>
+  <div
+    class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mt-2"
+  >
+    <label for="">Kernel</label>
+    <p-inputNumber
+      [showButtons]="false"
+      [(ngModel)]="machineState.kernelCount"
+      [min]="machineState.MIN_KERNEL_COUNT"
+      [disabled]="!machineState.buttonsState.kernel"
+    >
+    </p-inputNumber>
+  </div>
+</div>
+<div class="grid mt-1">
+  <div class="col-12">
+    <label style="display: block">Metodo de planificacion de procesos</label>
+    <p-dropdown
+      [style]="{ width: '100%', marginTop: '4px' }"
+      [options]="planningMethodsOptions"
+      optionValue="value"
+      optionLabel="name"
+      [(ngModel)]="machineState.processPlanningMethod"
+    ></p-dropdown>
+  </div>
+</div>
+<div class="grid mt-2">
+  <div class="col-6">
+    <button
+      pButton
+      class="p-button"
+      label="Iniciar"
+      style="width: 100%"
+      (click)="machineState.initMachine()"
+      [disabled]="!machineState.buttonsState.initMachine"
+    ></button>
+  </div>
+  <div class="col-6">
+    <button
+      pButton
+      class="p-button-danger"
+      label="Resetear"
+      style="width: 100%"
+      [disabled]="!machineState.buttonsState.resetMachine"
+      (click)="onResetMachine()"
+    ></button>
+  </div>
+</div>

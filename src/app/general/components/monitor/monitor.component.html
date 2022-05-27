@@ -1,0 +1,22 @@
+<div class="flex justify-content-center">
+  <button
+    pButton
+    label="Limpiar monitor"
+    (click)="onClearMonitor()"
+    style="background-color: var(--green-500); border-color: var(--green-500)"
+  ></button>
+</div>
+<div
+  class="p-2 flex flex-column align-items-center mt-2"
+  style="
+    border-radius: var(--border-radius);
+    border: 1px solid var(--green-500);
+  "
+>
+  <span style="color: var(--green-500)">Monitor</span>
+  <div class="w-full h-8rem text-center mt-3" style="overflow-y: auto">
+    <span style="display: block" *ngFor="let item of machineState.monitor">
+      {{ item }}
+    </span>
+  </div>
+</div>

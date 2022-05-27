@@ -1,0 +1,129 @@
+<div class="grid">
+  <div class="col-12">
+    <div
+      class="flex flex-column p-2"
+      style="
+        border-radius: var(--border-radius);
+        border: 1px solid var(--orange-500);
+      "
+    >
+      <span class="text-xs" style="color: var(--orange-500)"
+        >Estado de la maquina</span
+      >
+      <span class="text-sm mt-1"
+        >MODE: {{ machineState.state }} | MEMORY:
+        {{ machineState.memoryCount }} | KERNEL:
+        {{ machineState.kernelCount }}</span
+      >
+    </div>
+  </div>
+  <div class="col-12">
+    <div
+      class="flex flex-column p-2"
+      style="
+        border-radius: var(--border-radius);
+        border: 1px solid var(--pink-500);
+      "
+    >
+      <span class="text-xs" style="color: var(--pink-500)">En ejecucion</span>
+      <span class="text-sm mt-1"
+        >[{{ machineState.memoryRunningPosition }}] :
+        {{ getInExecutionLine() }}</span
+      >
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-4">
+        <div
+          class="h-3rem flex justify-content-center align-items-center text-sm"
+          style="
+            border-radius: var(--border-radius);
+            border: 1px solid var(--cyan-500);
+            color: var(--cyan-500);
+          "
+        >
+          Acumulador
+        </div>
+      </div>
+      <div class="col-8">
+        <div
+          class="h-3rem flex justify-content-center align-items-center text-md"
+          style="
+            border-radius: var(--border-radius);
+            border: 1px solid var(--cyan-500);
+          "
+        >
+          {{ machineState.memory[0] }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-8">
+        <input
+          style="width: 100%"
+          pInputText
+          type="text"
+          placeholder="Ingrese el valor a leer"
+          [(ngModel)]="machineState.readOperationInput.value"
+          [disabled]="!machineState.readOperationInput.active"
+        />
+      </div>
+      <div class="col-4">
+        <button
+          pButton
+          class="p-button-primary"
+          label="Ingresar"
+          style="width: 100%"
+          (click)="onReadValue()"
+          [disabled]="!machineState.readOperationInput.active"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="grid">
+      <div class="col-12">
+        <button
+          pButton
+          class="p-button-success"
+          label="Ejecutar sin pausas"
+          style="width: 100%"
+          (click)="onRunNotPause()"
+          [disabled]="!machineState.buttonsState.runNotPause"
+        ></button>
+      </div>
+      <div class="col-12">
+        <button
+          pButton
+          class="p-button-warning"
+          label="Ejecutar paso a paso"
+          style="width: 100%"
+          (click)="onRunStepByStep()"
+          [disabled]="!machineState.buttonsState.runStepByStep"
+        ></button>
+      </div>
+      <div class="col-12">
+        <button
+          pButton
+          class="p-button-danger"
+          label="Reiniciar posicion de memoria"
+          style="width: 100%"
+          [disabled]="!machineState.buttonsState.resetMemoryPosition"
+        ></button>
+      </div>
+      <div class="col-12">
+        <button
+          pButton
+          class="p-button-primary"
+          label="Siguiente instruccion"
+          style="width: 100%"
+          (click)="onNextInstruction()"
+          [disabled]="!machineState.buttonsState.nextInstruction"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
