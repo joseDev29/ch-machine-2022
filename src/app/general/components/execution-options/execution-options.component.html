@@ -15,6 +15,16 @@
         {{ machineState.memoryCount }} | KERNEL:
         {{ machineState.kernelCount }}</span
       >
+      <span class="text-sm mt-1">TIME: {{ machineState.time }}</span>
+      <span class="text-sm mt-1"
+        >PlANNING METHOD:
+        {{ planningMethods[machineState.processPlanningMethod].name }}</span
+      >
+      <span
+        class="text-sm mt-1"
+        *ngIf="machineState.processPlanningMethod === 'roundRobin'"
+        >QUANTUM: {{ machineState.quantum }}</span
+      >
     </div>
   </div>
   <div class="col-12">

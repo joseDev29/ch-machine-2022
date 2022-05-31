@@ -12,6 +12,7 @@ import { BadgeModule } from 'primeng/badge'
 import { TableModule } from 'primeng/table'
 import { InputTextModule } from 'primeng/inputtext'
 import { DropdownModule } from 'primeng/dropdown'
+import { DialogModule } from 'primeng/dialog'
 
 @NgModule({
   exports: [
@@ -25,6 +26,7 @@ import { DropdownModule } from 'primeng/dropdown'
     TableModule,
     InputTextModule,
     DropdownModule,
+    DialogModule,
   ],
   providers: [MessageService],
 })

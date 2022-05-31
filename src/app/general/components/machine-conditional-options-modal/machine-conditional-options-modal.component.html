@@ -1,0 +1,25 @@
+<p-dialog
+  [visible]="machineState.machineConditionalOptionsModalState.visible"
+  [modal]="true"
+  [closable]="false"
+>
+  <ng-template pTemplate="header">
+    <h3>Opciones extra de la maquina</h3>
+  </ng-template>
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <span>Quantum</span>
+    <p-inputNumber [showButtons]="true" [(ngModel)]="quantum" [min]="0">
+    </p-inputNumber>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      class="p-button"
+      label="Guardar"
+      style="width: 100%"
+      (click)="onSave()"
+    ></button>
+  </ng-template>
+</p-dialog>

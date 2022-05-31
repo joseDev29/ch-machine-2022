@@ -34,6 +34,7 @@
       optionValue="value"
       optionLabel="name"
       [(ngModel)]="machineState.processPlanningMethod"
+      [disabled]="!machineState.buttonsState.planningMethod"
     ></p-dropdown>
   </div>
 </div>

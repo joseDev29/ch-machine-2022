@@ -5,8 +5,11 @@ import { NOT_ASSIGNED_CELL } from '../constants/machine.constants'
 import {
   ButtonsState,
   ExecutionMode,
+  Log,
+  MachineConditionalOptionsModalState,
   MachineState,
   PROCESS_PLANNING_METHOD,
+  ProgramOptionsModalState,
   ReadOperationInput,
 } from '../interfaces/machine.interfaces'
 import {
@@ -17,9 +20,14 @@ import {
   VARIABLE_TYPE,
 } from '../interfaces/program.interfaces'
 
+interface SetConditionalOptionsParams {
+  quantum: number
+}
+
 const INITIAL_BUTTONS_STATE: ButtonsState = {
   initMachine: true,
   resetMachine: false,
+  planningMethod: true,
   kernel: true,
   memory: true,
   codeEditor: false,
@@ -33,7 +41,7 @@ const INITIAL_BUTTONS_STATE: ButtonsState = {
 }
 
 const DEFAULT_MEMORY_COUNT: number = 150
-const DEFAULT_KERNEL_COUNT: number = 109
+const DEFAULT_KERNEL_COUNT: number = 30 /*109*/
 
 const INITIAL_READ_OPERATION_INPUT: ReadOperationInput = {
   active: false,
@@ -61,6 +69,20 @@ export class MachineStateService {
   public rawCode: string = ''
   public code: string[][] = []
 
+  public quantum: number = 0
+
+  public machineConditionalOptionsModalState: MachineConditionalOptionsModalState =
+    {
+      visible: false,
+    }
+
+  public programOptionsModalState: ProgramOptionsModalState = {
+    visible: false,
+    programID: '',
+  }
+
+  public time: number = 0
+
   public memory: Array<string | number> = [0]
   public lastMemoryAssignedPosition = 0
   public programs: Map<string, Program> = new Map()
@@ -75,6 +97,7 @@ export class MachineStateService {
 
   public codeErrors: CodeError[] = []
 
+  public logs: Log[] = []
   public monitor: string[] = []
   public printer: string[] = []
 
@@ -104,9 +127,26 @@ export class MachineStateService {
 
     this.memoryRunningPosition += this.kernelCount
 
+    if (this.processPlanningMethod === PROCESS_PLANNING_METHOD.roundRobin) {
+      this.machineConditionalOptionsModalState = {
+        visible: true,
+      }
+      return
+    }
+
+    this.onFinishInit()
+  }
+
+  setConditionalOptions = ({ quantum }: SetConditionalOptionsParams) => {
+    this.quantum = quantum
+    this.onFinishInit()
+  }
+
+  onFinishInit = () => {
     this.buttonsState = {
       ...this.buttonsState,
       initMachine: false,
+      planningMethod: false,
       resetMachine: true,
       memory: false,
       kernel: false,
@@ -138,6 +178,7 @@ export class MachineStateService {
     this.allLabels = []
     this.programsInReview = new Map()
     this.codeErrors = []
+    this.logs = []
     this.monitor = []
     this.printer = []
     this.memoryRunningPosition = 0

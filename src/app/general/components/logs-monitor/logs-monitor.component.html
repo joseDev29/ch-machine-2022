@@ -1,0 +1,27 @@
+<div class="flex justify-content-center">
+  <button
+    pButton
+    label="Limpiar logs"
+    (click)="onClearLogs()"
+    style="background-color: var(--teal-500); border-color: var(--teal-500)"
+  ></button>
+</div>
+<div class="flex flex-column mt-2">
+  <span style="color: var(--purple-500)">Tiempo</span>
+  <span style="color: var(--orange-500)">ID del programa</span>
+  <span style="color: var(--green-500)">Posicion de memoria</span>
+</div>
+<div
+  class="p-2 flex flex-column align-items-center mt-2"
+  style="border-radius: var(--border-radius); border: 1px solid var(--teal-500)"
+>
+  <span style="color: var(--teal-500)">Logs</span>
+  <div class="w-full h-16rem mt-3" style="overflow-y: auto">
+    <span style="display: block" *ngFor="let item of machineState.logs">
+      <span style="color: var(--purple-500)">{{ item.time }} - </span>
+      <span style="color: var(--orange-500)">{{ item.programID }} </span>
+      <span style="color: var(--green-500)">[{{ item.memoryPosition }}] </span>
+      <span>{{ item.lineText }}</span>
+    </span>
+  </div>
+</div>

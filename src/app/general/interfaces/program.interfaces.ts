@@ -56,6 +56,12 @@ export interface Program {
   labels: Map<string, Label>
   initialPosition: number | null
   lastPosition: number | null
+  priority: number
+  arrivalTime: number
+  avalaibleBursts: number
+  executionPosition: number
+  executionCompleted: boolean
+  savedAccumulator: number | string
 }
 
 export interface CodeError {

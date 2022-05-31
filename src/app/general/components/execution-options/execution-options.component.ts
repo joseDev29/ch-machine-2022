@@ -1,5 +1,8 @@
 import { Component } from '@angular/core'
-import { MEMORY_LINE_SEPARATOR } from '../../constants/machine.constants'
+import {
+  MEMORY_LINE_SEPARATOR,
+  PROCESS_PLANNING_METHODS_OPTIONS,
+} from '../../constants/machine.constants'
 import {
   CompoundMemoryItem,
   VARIABLE_TYPE,
@@ -12,10 +15,14 @@ import { ProgramExecutionService } from '../../services/program-execution.servic
   templateUrl: 'execution-options.component.html',
 })
 export class ExecutionOptionsComponent {
+  public planningMethods: any = null
+
   constructor(
     public readonly machineState: MachineStateService,
     private readonly programExecutionService: ProgramExecutionService,
-  ) {}
+  ) {
+    this.planningMethods = PROCESS_PLANNING_METHODS_OPTIONS
+  }
 
   getInExecutionLine = () => {
     return this.machineState.memoryRunningPosition === 0

@@ -1,0 +1,29 @@
+<div class="mb-3" style="display: flex; flex-direction: column">
+  <span>ID (Identidicador del programa)</span>
+  <span>TL (Tiempo de llegada)</span>
+  <span>PR (Prioridad)</span>
+  <span>RCPUD (Rafagas de CPU disponibles)</span>
+</div>
+<p-table
+  [value]="getArrayPrograms()"
+  [scrollable]="true"
+  scrollHeight="300px"
+  scrollDirection="both"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>TL</th>
+      <th>PR</th>
+      <th>RCPUD</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-program>
+    <tr>
+      <td>{{ program.id }}</td>
+      <td>{{ program.arrivalTime }}</td>
+      <td>{{ program.priority }}</td>
+      <td>{{ program.avalaibleBursts }}</td>
+    </tr>
+  </ng-template>
+</p-table>

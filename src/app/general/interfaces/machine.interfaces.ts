@@ -6,6 +6,7 @@ export type ExecutionMode = 'not-pause' | 'step-by-step' | ''
 export interface ButtonsState {
   initMachine: boolean
   resetMachine: boolean
+  planningMethod: boolean
   kernel: boolean
   memory: boolean
   codeEditor: boolean
@@ -16,6 +17,10 @@ export interface ButtonsState {
   runStepByStep: boolean
   resetMemoryPosition: boolean
   nextInstruction: boolean
+}
+
+export interface ModalsState {
+  programOptions: boolean
 }
 
 export interface ReadOperationInput {
@@ -37,4 +42,20 @@ export enum PROCESS_PLANNING_METHOD {
 export interface ProcessPlanningMethodOption {
   value: PROCESS_PLANNING_METHOD
   name: string
+}
+
+export interface ProgramOptionsModalState {
+  visible: boolean
+  programID: string
+}
+
+export interface MachineConditionalOptionsModalState {
+  visible: boolean
+}
+
+export interface Log {
+  time: number
+  programID: string
+  memoryPosition: number
+  lineText: string
 }

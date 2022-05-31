@@ -41,7 +41,7 @@ export class RuleLabel {
     program.labels.set(labelName, {
       programID,
       name: labelName,
-      programPosition: labelValue - 1,
+      programPosition: labelValue,
       memoryPosition: null,
     })
 

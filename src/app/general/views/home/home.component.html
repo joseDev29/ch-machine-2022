@@ -1,3 +1,6 @@
+<app-machine-conditional-options-modal></app-machine-conditional-options-modal>
+<app-program-options-modal></app-program-options-modal>
+
 <div class="grid m-0">
   <div class="col-12 md:col-6 xl:col-4 min-h-screen">
     <div>
@@ -5,72 +8,71 @@
         <app-machine-options></app-machine-options>
       </p-panel>
     </div>
+
     <div class="mt-2">
       <p-panel header="Ejecucion" [toggleable]="true">
-        <!--  Execution options - start  -->
         <app-execution-options></app-execution-options>
-        <!--  Execution options - end  -->
       </p-panel>
     </div>
+
     <div class="mt-2">
       <p-panel header="Opciones de codigo" [toggleable]="true">
-        <!--  Code options - start  -->
         <app-code-options></app-code-options>
-        <!--  Code options - end  -->
       </p-panel>
     </div>
   </div>
+
   <div class="col-12 md:col-6 xl:col-4 min-h-screen">
-    <!--  Monitor and Printer - start  -->
     <div>
+      <p-panel header="Logs" [toggleable]="true">
+        <app-logs-monitor></app-logs-monitor>
+      </p-panel>
+    </div>
+
+    <div class="mt-2">
       <p-panel header="Monitor y impresora" [toggleable]="true">
         <app-monitor></app-monitor>
         <app-printer></app-printer>
       </p-panel>
     </div>
-    <!--  Monitor and Printer - end  -->
 
-    <!--  Code errors table - start  -->
     <div class="mt-2">
       <p-panel header="Errores" [toggleable]="true">
         <app-code-errors-table></app-code-errors-table>
       </p-panel>
     </div>
-    <!--  Code errors table - end  -->
 
-    <!--  Programs table - start  -->
     <div class="mt-2">
       <p-panel header="Programas" [toggleable]="true">
         <app-programs-table></app-programs-table>
       </p-panel>
     </div>
-    <!--  Programs table - end  -->
 
-    <!--  Variables table - start  -->
+    <div class="mt-2">
+      <p-panel header="Datos de planificacion" [toggleable]="true">
+        <app-planning-data-table></app-planning-data-table>
+      </p-panel>
+    </div>
+
     <div class="mt-2">
       <p-panel header="Variables" [toggleable]="true">
         <app-variables-table></app-variables-table>
       </p-panel>
     </div>
-    <!--  Variables table - end  -->
 
-    <!--  Labels table - start  -->
     <div class="mt-2">
       <p-panel header="Etiquetas" [toggleable]="true">
         <app-labels-table></app-labels-table>
       </p-panel>
     </div>
-    <!--  Labels table - end -->
   </div>
 
   <div class="col-12 md:col-6 xl:col-4 min-h-screen">
-    <!--  Memory table - start  -->
     <div>
       <p-panel header="Memoria" [toggleable]="true">
         <app-memory-table></app-memory-table>
       </p-panel>
     </div>
-    <!--  Memory table - end  -->
   </div>
 </div>
 

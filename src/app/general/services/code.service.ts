@@ -29,6 +29,11 @@ import { RuleShow } from './rules/rule-show.service'
 import { RuleStore } from './rules/rule-store.service'
 import { RuleSubtract } from './rules/rule-subtract.service'
 
+interface SetProgramOptionsParams {
+  programID: string
+  priority: number
+}
+
 @Injectable()
 export class CodeService {
   constructor(
@@ -58,6 +63,37 @@ export class CodeService {
     private readonly ruleReturn: RuleReturn,
   ) {}
 
+  setProgramOptions = ({ programID, priority }: SetProgramOptionsParams) => {
+    const program = this.machineState.programs.get(programID) as Program
+
+    program.priority = priority
+
+    const programList = Array.from(this.machineState.programs.values())
+
+    if (programList.length > 1) {
+      const prevProgram = programList[programList.length - 1]
+
+      const arrivalTime =
+        prevProgram.arrivalTime + Number((prevProgram.length / 4).toFixed())
+
+      program.arrivalTime = arrivalTime
+    }
+
+    this.machineState.programs.set(programID, program)
+
+    this.machineState.buttonsState = {
+      ...this.machineState.buttonsState,
+      runNotPause: true,
+      runStepByStep: true,
+    }
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Programa cargado en memoria',
+      detail: 'El programa se ha cargado correctamente en la memoria',
+    })
+  }
+
   analyzeAndLoad = () => {
     this.machineState.code = []
     this.machineState.programsInReview.clear()
@@ -82,6 +118,12 @@ export class CodeService {
       labels: new Map(),
       initialPosition: null,
       lastPosition: null,
+      priority: 0,
+      arrivalTime: 0,
+      avalaibleBursts: 0,
+      executionPosition: 0,
+      executionCompleted: false,
+      savedAccumulator: 0,
     })
 
     this.analyzeCode({ programID })
@@ -92,53 +134,10 @@ export class CodeService {
 
     this.loadToMemory({ programID })
 
-    this.machineState.buttonsState = {
-      ...this.machineState.buttonsState,
-      runNotPause: true,
-      runStepByStep: true,
+    this.machineState.programOptionsModalState = {
+      programID,
+      visible: true,
     }
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Programa cargado en memoria',
-      detail: 'El programa se ha cargado correctamente en la memoria',
-    })
-
-    // console.log('ERRORS: ', this.machineState.codeErrors)
-
-    // console.log('MEMORY: ', this.machineState.memory)
-
-    // this.machineState.programs.forEach((value, key) => {
-    //   console.log(`------------> Program: ${key} <-----------`)
-
-    //   console.log(value)
-
-    //   console.log('              ------> Variables <------               ')
-    //   value.variables.forEach((value, key) =>
-    //     console.log(`VAR[ ${key} ] = `, value),
-    //   )
-
-    //   console.log('              ------> Labels <------               ')
-    //   value.labels.forEach((value, key) =>
-    //     console.log(`LABEL[ ${key} ] = `, value),
-    //   )
-    // })
-
-    // this.machineState.programsInReview.forEach((value, key) => {
-    //   console.log(`------------> Program: ${key} <-----------`)
-
-    //   console.log(value)
-
-    //   console.log('              ------> Variables <------               ')
-    //   value.variables.forEach((value, key) =>
-    //     console.log(`VAR[ ${key} ] = `, value),
-    //   )
-
-    //   console.log('              ------> Labels <------               ')
-    //   value.labels.forEach((value, key) =>
-    //     console.log(`LABEL[ ${key} ] = `, value),
-    //   )
-    // })
   }
 
   orderCode = () => {

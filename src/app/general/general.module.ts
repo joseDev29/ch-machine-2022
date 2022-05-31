@@ -26,6 +26,10 @@ import { MonitorComponent } from './components/monitor/monitor.component'
 import { CodeOptionsComponent } from './components/code-options/code-options.component'
 import { ExecutionOptionsComponent } from './components/execution-options/execution-options.component'
 import { MachineOptionsComponent } from './components/machine-options/machine-options.component'
+import { ProgramOptionsModalComponent } from './components/program-options-modal/program-options-modal.component'
+import { PlanningDataTableComponent } from './components/planning-data-table/planning-data-table.component'
+import { MachineConditionalOptionsModalComponent } from './components/machine-conditional-options-modal/machine-conditional-options-modal.component'
+import { LogsMonitor } from './components/logs-monitor/logs-monitor.component'
 
 //Rules
 import { RuleNew } from './services/rules/rule-new.service'
@@ -88,6 +92,10 @@ import { Subtract } from './services/operations/subtract.service'
     CodeOptionsComponent,
     ExecutionOptionsComponent,
     MachineOptionsComponent,
+    ProgramOptionsModalComponent,
+    PlanningDataTableComponent,
+    MachineConditionalOptionsModalComponent,
+    LogsMonitor,
   ],
   imports: [CommonModule, PrimeNgModule, FormsModule],
   exports: [HomeComponent],
