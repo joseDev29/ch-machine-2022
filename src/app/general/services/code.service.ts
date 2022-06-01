@@ -353,8 +353,6 @@ export class CodeService {
       program.lastPosition =
         avalaiblePartition.initialPosition + program.length - 1
 
-      console.log('PROGRAM LAST POSITION: ', program.lastPosition)
-
       const newPartitionList = this.machineState.partitions.map((item) => {
         if (
           item.initialPosition === avalaiblePartition.initialPosition &&
