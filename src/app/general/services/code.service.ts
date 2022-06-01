@@ -28,7 +28,10 @@ import { RuleReturn } from './rules/rule-return.service'
 import { RuleShow } from './rules/rule-show.service'
 import { RuleStore } from './rules/rule-store.service'
 import { RuleSubtract } from './rules/rule-subtract.service'
-import { MEMORY_MANAGEMENT_METHOD } from '../interfaces/machine.interfaces'
+import {
+  MEMORY_MANAGEMENT_METHOD,
+  PROCESS_PLANNING_METHOD,
+} from '../interfaces/machine.interfaces'
 
 interface SetProgramOptionsParams {
   programID: string
@@ -136,6 +139,14 @@ export class CodeService {
     const isSuccessLoad = this.loadToMemory({ programID })
 
     if (!isSuccessLoad) return
+
+    if (
+      this.machineState.processPlanningMethod ===
+        PROCESS_PLANNING_METHOD.roundRobin ||
+      this.machineState.processPlanningMethod === PROCESS_PLANNING_METHOD.fcfs
+    ) {
+      return this.setProgramOptions({ programID, priority: 0 })
+    }
 
     this.machineState.programOptionsModalState = {
       programID,
