@@ -1,0 +1,14 @@
+<div style="display: flex; flex-direction: column; gap: 8px">
+  <div
+    *ngFor="let item of machineState.partitions; index as i"
+    class="p-2 text-center"
+    style="
+      background-color: var(--pink-50);
+      border: 0.5px solid var(--pink-500);
+      border-radius: var(--border-radius);
+    "
+  >
+    P{{ i }}: tamaño={{ item.size }} posiciones=[{{ item.initialPosition }} -
+    {{ item.lastPosition }}] disponible={{ item.available ? 'si' : 'no' }}
+  </div>
+</div>

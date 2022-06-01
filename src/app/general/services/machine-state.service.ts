@@ -8,6 +8,7 @@ import {
   Log,
   MachineConditionalOptionsModalState,
   MachineState,
+  MEMORY_MANAGEMENT_METHOD,
   PROCESS_PLANNING_METHOD,
   ProgramOptionsModalState,
   ReadOperationInput,
@@ -15,6 +16,7 @@ import {
 import {
   CodeError,
   Label,
+  Partition,
   Program,
   Variable,
   VARIABLE_TYPE,
@@ -27,6 +29,7 @@ interface SetConditionalOptionsParams {
 const INITIAL_BUTTONS_STATE: ButtonsState = {
   initMachine: true,
   resetMachine: false,
+  memoryManagementMethod: true,
   planningMethod: true,
   kernel: true,
   memory: true,
@@ -62,6 +65,9 @@ export class MachineStateService {
   public memoryCount: number = DEFAULT_MEMORY_COUNT
   public kernelCount: number = DEFAULT_KERNEL_COUNT
 
+  public memoryManagementMethod: MEMORY_MANAGEMENT_METHOD =
+    MEMORY_MANAGEMENT_METHOD.fixedPartitions
+
   public processPlanningMethod: PROCESS_PLANNING_METHOD =
     PROCESS_PLANNING_METHOD.fcfs
 
@@ -84,6 +90,9 @@ export class MachineStateService {
   public time: number = 0
 
   public memory: Array<string | number> = [0]
+
+  public partitions: Partition[] = []
+
   public lastMemoryAssignedPosition = 0
   public programs: Map<string, Program> = new Map()
   public memoryRunningPosition: number = 0
@@ -127,7 +136,10 @@ export class MachineStateService {
 
     this.memoryRunningPosition += this.kernelCount
 
-    if (this.processPlanningMethod === PROCESS_PLANNING_METHOD.roundRobin) {
+    if (
+      this.processPlanningMethod === PROCESS_PLANNING_METHOD.roundRobin ||
+      this.memoryManagementMethod === MEMORY_MANAGEMENT_METHOD.fixedPartitions
+    ) {
       this.machineConditionalOptionsModalState = {
         visible: true,
       }
@@ -146,6 +158,7 @@ export class MachineStateService {
     this.buttonsState = {
       ...this.buttonsState,
       initMachine: false,
+      memoryManagementMethod: false,
       planningMethod: false,
       resetMachine: true,
       memory: false,

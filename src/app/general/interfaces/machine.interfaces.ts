@@ -6,6 +6,7 @@ export type ExecutionMode = 'not-pause' | 'step-by-step' | ''
 export interface ButtonsState {
   initMachine: boolean
   resetMachine: boolean
+  memoryManagementMethod: boolean
   planningMethod: boolean
   kernel: boolean
   memory: boolean
@@ -39,8 +40,19 @@ export enum PROCESS_PLANNING_METHOD {
   priorityExpropiative = 'priorityExpropiative',
 }
 
+export enum MEMORY_MANAGEMENT_METHOD {
+  fixedPartitions = 'fixedPartitions',
+  variablePartitions = 'variablePartitions',
+  pagination = 'pagination',
+}
+
 export interface ProcessPlanningMethodOption {
   value: PROCESS_PLANNING_METHOD
+  name: string
+}
+
+export interface MemoryManagementMethodOption {
+  value: MEMORY_MANAGEMENT_METHOD
   name: string
 }
 

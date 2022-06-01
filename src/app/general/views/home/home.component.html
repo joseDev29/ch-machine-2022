@@ -37,20 +37,14 @@
     </div>
 
     <div class="mt-2">
-      <p-panel header="Errores" [toggleable]="true">
-        <app-code-errors-table></app-code-errors-table>
-      </p-panel>
-    </div>
-
-    <div class="mt-2">
       <p-panel header="Programas" [toggleable]="true">
         <app-programs-table></app-programs-table>
       </p-panel>
     </div>
 
     <div class="mt-2">
-      <p-panel header="Datos de planificacion" [toggleable]="true">
-        <app-planning-data-table></app-planning-data-table>
+      <p-panel header="Errores" [toggleable]="true">
+        <app-code-errors-table></app-code-errors-table>
       </p-panel>
     </div>
 
@@ -68,7 +62,19 @@
   </div>
 
   <div class="col-12 md:col-6 xl:col-4 min-h-screen">
-    <div>
+    <div *ngIf="machineState.memoryManagementMethod === 'fixedPartitions'">
+      <p-panel header="Particiones de memoria" [toggleable]="true">
+        <app-memory-partitions></app-memory-partitions>
+      </p-panel>
+    </div>
+
+    <div class="mt-2">
+      <p-panel header="Datos de planificacion" [toggleable]="true">
+        <app-planning-data-table></app-planning-data-table>
+      </p-panel>
+    </div>
+
+    <div class="mt-2">
       <p-panel header="Memoria" [toggleable]="true">
         <app-memory-table></app-memory-table>
       </p-panel>

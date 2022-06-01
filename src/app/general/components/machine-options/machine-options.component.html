@@ -27,6 +27,19 @@
 </div>
 <div class="grid mt-1">
   <div class="col-12">
+    <label style="display: block">Metodo de administracion de memoria</label>
+    <p-dropdown
+      [style]="{ width: '100%', marginTop: '4px' }"
+      [options]="memoryManagementMethodsOptions"
+      optionValue="value"
+      optionLabel="name"
+      [(ngModel)]="machineState.memoryManagementMethod"
+      [disabled]="!machineState.buttonsState.memoryManagementMethod"
+    ></p-dropdown>
+  </div>
+</div>
+<div class="grid mt-1">
+  <div class="col-12">
     <label style="display: block">Metodo de planificacion de procesos</label>
     <p-dropdown
       [style]="{ width: '100%', marginTop: '4px' }"

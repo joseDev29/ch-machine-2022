@@ -1,6 +1,12 @@
 import { Component } from '@angular/core'
-import { PROCESS_PLANNING_METHODS_OPTIONS } from '../../constants/machine.constants'
-import { ProcessPlanningMethodOption } from '../../interfaces/machine.interfaces'
+import {
+  MEMORY_MANAGEMENT_METHODS_OPTIONS,
+  PROCESS_PLANNING_METHODS_OPTIONS,
+} from '../../constants/machine.constants'
+import {
+  MemoryManagementMethodOption,
+  ProcessPlanningMethodOption,
+} from '../../interfaces/machine.interfaces'
 import { MachineStateService } from '../../services/machine-state.service'
 
 @Component({
@@ -11,6 +17,8 @@ export class MachineOptionsComponent {
   public planningMethodsOptions: ProcessPlanningMethodOption[] = Object.values(
     PROCESS_PLANNING_METHODS_OPTIONS,
   )
+  public memoryManagementMethodsOptions: MemoryManagementMethodOption[] =
+    Object.values(MEMORY_MANAGEMENT_METHODS_OPTIONS)
 
   constructor(public readonly machineState: MachineStateService) {}
 

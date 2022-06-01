@@ -30,6 +30,7 @@ import { ProgramOptionsModalComponent } from './components/program-options-modal
 import { PlanningDataTableComponent } from './components/planning-data-table/planning-data-table.component'
 import { MachineConditionalOptionsModalComponent } from './components/machine-conditional-options-modal/machine-conditional-options-modal.component'
 import { LogsMonitor } from './components/logs-monitor/logs-monitor.component'
+import { MemoryPartitionsComponent } from './components/memory-partitions/memory-partitions.component'
 
 //Rules
 import { RuleNew } from './services/rules/rule-new.service'
@@ -96,6 +97,7 @@ import { Subtract } from './services/operations/subtract.service'
     PlanningDataTableComponent,
     MachineConditionalOptionsModalComponent,
     LogsMonitor,
+    MemoryPartitionsComponent,
   ],
   imports: [CommonModule, PrimeNgModule, FormsModule],
   exports: [HomeComponent],

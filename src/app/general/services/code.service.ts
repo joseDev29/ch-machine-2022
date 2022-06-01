@@ -28,6 +28,7 @@ import { RuleReturn } from './rules/rule-return.service'
 import { RuleShow } from './rules/rule-show.service'
 import { RuleStore } from './rules/rule-store.service'
 import { RuleSubtract } from './rules/rule-subtract.service'
+import { MEMORY_MANAGEMENT_METHOD } from '../interfaces/machine.interfaces'
 
 interface SetProgramOptionsParams {
   programID: string
@@ -132,7 +133,9 @@ export class CodeService {
 
     if (!isValidProgram) return
 
-    this.loadToMemory({ programID })
+    const isSuccessLoad = this.loadToMemory({ programID })
+
+    if (!isSuccessLoad) return
 
     this.machineState.programOptionsModalState = {
       programID,
@@ -329,11 +332,61 @@ export class CodeService {
     program.lastPosition =
       this.machineState.lastMemoryAssignedPosition + program.length
 
+    if (
+      this.machineState.memoryManagementMethod ===
+      MEMORY_MANAGEMENT_METHOD.fixedPartitions
+    ) {
+      const avalaiblePartition = this.machineState.partitions.find(
+        (item) => item.available && program.length <= item.size,
+      )
+
+      if (!avalaiblePartition) {
+        this.messageService.add({
+          severity: 'error',
+          summary:
+            'No hay particiones disponibles con capacidad de alojar este programa',
+        })
+        return false
+      }
+
+      program.initialPosition = avalaiblePartition.initialPosition
+      program.lastPosition =
+        avalaiblePartition.initialPosition + program.length - 1
+
+      console.log('PROGRAM LAST POSITION: ', program.lastPosition)
+
+      const newPartitionList = this.machineState.partitions.map((item) => {
+        if (
+          item.initialPosition === avalaiblePartition.initialPosition &&
+          item.lastPosition === avalaiblePartition.lastPosition
+        ) {
+          item.available = false
+        }
+
+        return item
+      })
+
+      this.machineState.partitions = newPartitionList
+    }
+
     this.machineState.lastMemoryAssignedPosition += program.length
+
+    // program.variables.forEach((variable, varName) => {
+    //   variable.memoryPosition =
+    //     this.machineState.lastMemoryAssignedPosition -
+    //     program.variables.size +
+    //     variable.declarationOrder
+
+    //   program.variables.set(varName, variable)
+
+    //   program.memoryBlock.push(variable.value)
+
+    //   this.machineState.allVariables.push(variable)
+    // })
 
     program.variables.forEach((variable, varName) => {
       variable.memoryPosition =
-        this.machineState.lastMemoryAssignedPosition -
+        (program.lastPosition as number) -
         program.variables.size +
         variable.declarationOrder
 
@@ -353,8 +406,17 @@ export class CodeService {
       this.machineState.allLabels.push(label)
     })
 
+    // this.machineState.memory.splice(
+    //   this.machineState.lastMemoryAssignedPosition + 1 - program.length,
+    //   program.length,
+    //   ...program.memoryBlock.map((item) => {
+    //     if (typeof item === 'string' || typeof item === 'number') return item
+    //     return `${JSON.stringify(item)}${MEMORY_LINE_SEPARATOR}${item.lineText}`
+    //   }),
+    // )
+
     this.machineState.memory.splice(
-      this.machineState.lastMemoryAssignedPosition + 1 - program.length,
+      program.initialPosition,
       program.length,
       ...program.memoryBlock.map((item) => {
         if (typeof item === 'string' || typeof item === 'number') return item
@@ -365,5 +427,7 @@ export class CodeService {
     this.machineState.programs.set(programID, program)
     this.machineState.programsInReview.clear()
     this.machineState.code = []
+
+    return true
   }
 }

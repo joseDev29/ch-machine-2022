@@ -7,7 +7,44 @@
     <h3>Opciones extra de la maquina</h3>
   </ng-template>
 
-  <div style="display: flex; flex-direction: column; gap: 8px">
+  <div
+    *ngIf="machineState.memoryManagementMethod === 'fixedPartitions'"
+    style="display: flex; flex-direction: column; gap: 8px"
+  >
+    <span>Particiones de memoria</span>
+
+    <div>Memoria disponible: {{ getAvalaibleMemory() }}</div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <p-inputNumber
+        [showButtons]="true"
+        [(ngModel)]="newPartitionSize"
+        [min]="0"
+      >
+      </p-inputNumber>
+      <button
+        pButton
+        class="p-button p-button-help"
+        label="Agregar particion"
+        style="width: 100%"
+        (click)="onCreatePartition()"
+      ></button>
+    </div>
+
+    <div style="display: flex; flex-direction: column">
+      <div *ngFor="let item of machineState.partitions; index as i">
+        P{{ i }}: tamaño={{ item.size }} rango=({{ item.initialPosition }}-{{
+          item.lastPosition
+        }})
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="machineState.processPlanningMethod === 'roundRobin'"
+    class="mt-4"
+    style="display: flex; flex-direction: column; gap: 8px"
+  >
     <span>Quantum</span>
     <p-inputNumber [showButtons]="true" [(ngModel)]="quantum" [min]="0">
     </p-inputNumber>
@@ -16,7 +53,7 @@
   <ng-template pTemplate="footer">
     <button
       pButton
-      class="p-button"
+      class="p-button mt-2"
       label="Guardar"
       style="width: 100%"
       (click)="onSave()"

@@ -88,3 +88,10 @@ export interface CompoundMemoryItem {
   programPosition?: number
   memoryPosition?: number | null
 }
+
+export interface Partition {
+  initialPosition: number
+  lastPosition: number
+  size: number
+  available: boolean
+}
